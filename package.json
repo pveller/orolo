@@ -1,0 +1,40 @@
+{
+  "name": "orolo",
+  "version": "0.1.0",
+  "description": "Natural language dates parser for JavaScript",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "npm run build",
+    "precommit": "npm run lint",
+    "build": "tsc",
+    "lint": "tslint -c tslint.json -t stylish --fix 'src/**/*.ts'",
+    "test": "jest"
+  },
+  "keywords": [
+    "dates",
+    "date",
+    "parser",
+    "natural language",
+    "understanding",
+    "nlp"
+  ],
+  "author": "Pavel Veller",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^22.2.3",
+    "husky": "^0.14.3",
+    "jest": "^23.0.0",
+    "prettier": "^1.12.1",
+    "ts-jest": "^22.4.6",
+    "tslint": "^5.10.0",
+    "tslint-config-prettier": "^1.13.0",
+    "typescript": "^2.8.3"
+  },
+  "dependencies": {
+    "@types/date-fns": "^2.6.0",
+    "@types/lodash": "^4.14.109",
+    "date-fns": "^1.29.0",
+    "lodash": "^4.17.10"
+  }
+}

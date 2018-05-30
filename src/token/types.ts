@@ -1,0 +1,18 @@
+enum TokenTypes {
+  UNDEFINED,
+  DATE,
+  NAMED_DAY,
+  MONTH,
+  DAY_OF_MONTH,
+  DAY_OF_WEEK,
+  DIRECTION_WEEK,
+  DIRECTION_MONTH,
+  DIRECTION_YEAR,
+  DURATION,
+  ANCHOR_START,
+  ANCHOR_END,
+  ENUMERATION,
+  RANGE
+}
+
+export default TokenTypes;
