@@ -1,8 +1,10 @@
 // ToDo: need to cover the entire matcher with tests
 // ToDo: do we need named matchers? like TokenType-to-Matcher map? Otherwise tests are not deterministic
 
-import { matchers } from '../src/matcher';
-import { Token, TokenDayOfMonth, TokenTypes } from '../src/token';
+import { TokenDayOfMonth, TokenTypes } from '../../../token';
+import { EnglishLocale } from '../index';
+
+const locale = new EnglishLocale();
 
 Object.entries({
   '1': ['one', 'first'],
@@ -17,14 +19,16 @@ Object.entries({
     const expected = Number(testcase[0]);
 
     days.forEach(day => {
-      const matcher = matchers.find(m => m.match(day));
+      const detector = locale.detectors().find(d => d.match(day));
 
-      expect(matcher).not.toBeNull();
+      expect(detector).not.toBeNull();
 
-      if (matcher) {
-        const token = matcher.extract(day) as TokenDayOfMonth;
+      if (detector) {
+        const token = detector.extract(day) as TokenDayOfMonth;
         expect(token.type).toEqual(TokenTypes.DAY_OF_MONTH);
         expect(token.token).toEqual(expected);
+      } else {
+        throw new Error('Detector should not be null');
       }
     });
   })

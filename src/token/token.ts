@@ -1,5 +1,6 @@
 import TokenTypes from './types';
 
+// ToDo: I think it makes sense to also hold on to the original string token
 export default class Token<T> {
   public readonly type: TokenTypes;
   public readonly token: T;
@@ -10,6 +11,8 @@ export default class Token<T> {
     this.type = type;
     this.token = token;
   }
+
+  // ToDo: simplify these APIs
 
   public requiredAttachments(): TokenTypes[] {
     return [];
@@ -27,7 +30,6 @@ export default class Token<T> {
     return this.requiredAttachments();
   }
 
-  // ToDo: unit test how completeless changes
   public isComplete(): boolean {
     const anchors =
       this.requiredAnchors().length === 0 ||
@@ -42,10 +44,8 @@ export default class Token<T> {
     return anchors && attachments;
   }
 
-  // ToDo: do we need a detach counterpart? we can modify attachments and it will not modify the respective anchor
   public attach(token: Token<any>): void {
     if (token && this.willAnchor().includes(token.type)) {
-      // ToDo: do we ever have multiple tokens?
       token.anchor = this;
       this.attachments.push(token);
     }
@@ -55,5 +55,3 @@ export default class Token<T> {
     return [];
   }
 }
-
-// ToDo: wednesday, thursday and then again next week Tuesday

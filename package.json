@@ -1,7 +1,7 @@
 {
   "name": "orolo",
   "version": "0.1.0",
-  "description": "Natural language dates parser for JavaScript",
+  "description": "An aggressive natural language dates parser for JavaScript",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {

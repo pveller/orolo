@@ -1,8 +1,11 @@
-import { parse } from '../src/parser';
-import { TokenTypes } from '../src/token';
+import { EnglishLocale } from '../../locale/english';
+import { parse } from '../../parser';
+import { TokenTypes } from '../../token';
+
+const locale = new EnglishLocale();
 
 test('Parser should parse properly formatted dates', () => {
-  const tokenized = parse('12/15/18').raw(false);
+  const tokenized = parse('12/15/18', locale).raw(false);
   const expected = [
     {
       token: '12/15/18',
@@ -14,7 +17,7 @@ test('Parser should parse properly formatted dates', () => {
 });
 
 test('Parser should parse months and single dates', () => {
-  const tokenized = parse('in NYC on April the 5th').raw(false);
+  const tokenized = parse('in NYC on April the 5th', locale).raw(false);
   const expected = [
     {
       token: 4,
@@ -30,7 +33,7 @@ test('Parser should parse months and single dates', () => {
 });
 
 test('Parser should see ranges and enumerations', () => {
-  const tokenized = parse('in NYC 5/15 - 5/18 and 5/20').raw(false);
+  const tokenized = parse('in NYC 5/15 - 5/18 and 5/20', locale).raw(false);
   const expected = [
     {
       token: '5/15',
@@ -58,9 +61,10 @@ test('Parser should see ranges and enumerations', () => {
 });
 
 test('Parser should see days of week and direction', () => {
-  const tokenized = parse('was in London last week Wed through Friday').raw(
-    false
-  );
+  const tokenized = parse(
+    'was in London last week Wed through Friday',
+    locale
+  ).raw(false);
   const expected = [
     {
       token: -1,
@@ -84,7 +88,7 @@ test('Parser should see days of week and direction', () => {
 });
 
 test('Parser should see spelled out days', () => {
-  const tokenized = parse('in new york on may twenty fifth').raw(false);
+  const tokenized = parse('in new york on may twenty fifth', locale).raw(false);
   const expected = [
     {
       token: 5,
@@ -100,7 +104,7 @@ test('Parser should see spelled out days', () => {
 });
 
 test('Parser should understand named days', () => {
-  const tokenized = parse('in London today and tomorrow').raw(false);
+  const tokenized = parse('in London today and tomorrow', locale).raw(false);
   const expected = [
     {
       token: 0,
@@ -120,7 +124,7 @@ test('Parser should understand named days', () => {
 });
 
 test('Parser should understand durations', () => {
-  const tokenized = parse('I will in Dubai next two weeks').raw(false);
+  const tokenized = parse('I will in Dubai next two weeks', locale).raw(false);
   const expected = [
     {
       token: 1,
@@ -136,7 +140,9 @@ test('Parser should understand durations', () => {
 });
 
 test('Tokenizer shoud understand starting anchors', () => {
-  const tokenized = parse('in Australlia for 2 weeks starting Thu').raw(false);
+  const tokenized = parse('in Australlia for 2 weeks starting Thu', locale).raw(
+    false
+  );
   const expected = [
     {
       token: '2 weeks',
@@ -160,7 +166,7 @@ test('Tokenizer shoud understand starting anchors', () => {
   'will be in Dallas all week next week'
 ].forEach(token =>
   test(`Parser should understand a combination of duration and direction in [${token}]`, () => {
-    const tokenized = parse(token).raw(false);
+    const tokenized = parse(token, locale).raw(false);
     const expected = [
       {
         token: 'all week',
@@ -178,7 +184,8 @@ test('Tokenizer shoud understand starting anchors', () => {
 
 test('Parser should understand quite complex expressions', () => {
   const parsed = parse(
-    'Tue through Friday next week and then again Wed and Thu the week after next'
+    'Tue through Friday next week and then again Wed and Thu the week after next',
+    locale
   ).raw(false);
   const expected = [
     {

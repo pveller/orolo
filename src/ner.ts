@@ -5,7 +5,10 @@ import { eachDay } from 'date-fns';
 import { parse } from './parser';
 import { Token, TokenTypes } from './token';
 
-// ToDo: we don't try to compensate for missing attachments as I don't believe it's ever the case
+import { EnglishLocale } from './locale/english';
+import { ILocale } from './locale/locale';
+
+// we don't try to compensate for missing attachments
 const isComplete = (tokens: Array<Token<any>>) =>
   tokens
     .filter(token => token.requiredAnchors().length > 0)
@@ -25,7 +28,7 @@ const complete = (
   );
 
   // 2. for each token, find its anchor and inject into the array right next to it
-  // reverse the search if we are completing the right from the left
+  // Reverse the search if we are completing the right from the left
   const searchIn = reverse ? [...target].reverse() : target;
 
   missingAnchors.forEach(incomplete => {
@@ -52,8 +55,6 @@ const complete = (
       })
     );
   });
-
-  // 3. ToDo: I don't think we will ever be missing attachments ??
 };
 
 const split = (tokens: Array<Token<any>>, index: number) => {
@@ -78,7 +79,7 @@ const compute = (
   if (tokens.length === 0) {
     return [];
   }
-
+  // 1. split by emumeration
   const splitByEnumeration = tokens.findIndex(
     token => token.type === TokenTypes.ENUMERATION
   );
@@ -97,14 +98,13 @@ const compute = (
   if (splitByRange > -1) {
     const [left, right] = split(tokens, splitByRange);
 
-    // left and right equation of a range will always have a single date
+    // left and right equation of a range will always compute down to a date
     return eachDay(compute(left, today)[0], compute(right, today)[0]);
   }
 
   // attach every token to its anchor
-  // do it over a copy as we will be modifying the original array as we re-attach elements
   tokens.forEach((token, idx) => {
-    // we can't filter, need to preserve the idex in the original sequence
+    // we can't filter, need to preserve the index in the original sequence
     // so that we could do a search for the nearest anchor candidate
     if (token.willAttachTo().length > 0) {
       let anchor = null;
@@ -113,7 +113,8 @@ const compute = (
       for (let step = 1; !anchor && step <= reach; step += 1) {
         // look behind and ahead and discard undefineds if we get out of boundary
         // give more priority to the token behind
-        // ToDo: we probably need to give locales the control over what direction takes precedence
+
+        // ToDo: we probably need to give locales the control over what direction takes precedence?
         anchor = [tokens[idx - step], tokens[idx + step]]
           .filter(Boolean)
           .find(candidate => token.willAttachTo().includes(candidate.type));
@@ -124,6 +125,8 @@ const compute = (
     }
   });
 
+  // ToDo: do we need to inject a Year Direction token?
+
   // only compute top level tokes that didn't attach anywhere
   const heads = tokens.filter(token => !token.anchor);
   const dates = _.flatMap(heads, head => head.compute(today));
@@ -131,15 +134,23 @@ const compute = (
   return dates;
 };
 
-export const recognize = (utterance: string, today = new Date()) => {
-  if (!utterance) {
-    return [];
+export class NER {
+  private locale: ILocale;
+
+  constructor(locale: ILocale = new EnglishLocale()) {
+    this.locale = locale;
   }
 
-  const sequence = parse(utterance);
+  public recognize(utterance: string, today = new Date()) {
+    if (!utterance) {
+      return [];
+    }
 
-  return compute(
-    sequence.tokens.filter(token => token.type !== TokenTypes.UNDEFINED),
-    today
-  );
-};
+    const sequence = parse(utterance, this.locale);
+
+    return compute(
+      sequence.tokens.filter(token => token.type !== TokenTypes.UNDEFINED),
+      today
+    );
+  }
+}
