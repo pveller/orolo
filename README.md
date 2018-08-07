@@ -8,9 +8,9 @@ There are very good NLP date parses for JavaScript:
 
 * [chrono](https://github.com/wanasit/chrono)
 * [date](https://github.com/MatthewMueller/date)
-* [recognizers-text-date-time]()
+* [recognizers-date-time](https://github.com/Microsoft/Recognizers-Text/tree/master/JavaScript/packages/recognizers-date-time)
 
-There are also strong general purpose NLP frameworks and some come with pre-build named entity recognition for dates:
+There are also strong general purpose NLP frameworks that some with pre-build named entity recognition for dates:
 
 * [compromise](https://github.com/spencermountain/compromise)
 * [natural](https://github.com/NaturalNode/natural)
@@ -36,7 +36,7 @@ const { Orolo } = require('orolo');
 
 const orolo = new Orolo();
 const dates = orolo.recognize(
-  'I will be in New York next week Tuesday and Friday'
+  'I will be in New York next week Tuesday and also Friday'
 );
 ```
 
@@ -44,7 +44,10 @@ If you know that the dates in the sentence are not relative to today:
 
 ```javascript
 const context = new Date('2018-05-01');
-const dates = orolo.recognize('I am not available next week Mon - Wed');
+const dates = orolo.recognize(
+  'I am not available next week Mon - Wed',
+  context
+);
 ```
 
 ## How It Works
@@ -53,14 +56,29 @@ Orolo works in two stages. First, it parses the sentence looking for date tokens
 
 ## Locales
 
-Right now orolo only supports English but it is designed to support other languages as well:
+Right now orolo only supports English but it is designed to support other languages as well. You will need to implement the `ILocale` interface. The best way to do it at the moment is to take a look at how `EnglishLocale` is implemented. In short, you specify how to tokenize a sentence, you also specify how many language tokens (words) can a date token span, and then you implement token detectors for each token type that _orolo_ supports.
 
-```typescript
-interface ILocale {
-  splitBy: RegExp;
-  maxNGram: number;
-  detectors(): ITokenDetector[];
-}
+## Aggressive Parsing
+
+_Orolo_ takes everything that looks like a valid date token and then attempts to compute a date. The following two sentenses will compute down to `May 5th`:
+
+```
+It happened on May 5
+I bought 5 shirts in May
 ```
 
-TBD [explain in more details]
+There is no logic currently to look at either dependency graph or proximity of tokens to each other.
+
+## Parsed Sequence
+
+If you would like to take advantage of parsing logic but don't want/need _orolo_ to compute the dates:
+
+```javascript
+const { parse, EnglishLocale } = require('orolo');
+const sequence = parse(
+  'I will be in New York next week Tuesday and also Friday',
+  new EnglishLocale()
+);
+
+// sequence.tokens will return an Array of parsed tokens
+```

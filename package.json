@@ -2,8 +2,10 @@
   "name": "orolo",
   "version": "0.1.0",
   "description": "An aggressive natural language dates parser for JavaScript",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "homepage": "https://github.com/pveller/orolo",
+  "bugs": "https://github.com/pveller/orolo/issues",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "prepublish": "npm run build",
     "precommit": "npm run lint",
@@ -19,8 +21,16 @@
     "understanding",
     "nlp"
   ],
-  "author": "Pavel Veller",
+  "author": {
+    "name": "Pavel Veller",
+    "email": "pveller@gmail.com",
+    "url": "https://www.pveller.com"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pveller/orolo.git"
+  },
   "devDependencies": {
     "@types/jest": "^22.2.3",
     "husky": "^0.14.3",

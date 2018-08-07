@@ -1,4 +1,10 @@
-import { Token, TokenTypes } from '../../../token';
+import {
+  Token,
+  TokenDirectionMonth,
+  TokenDirectionWeek,
+  TokenDirectionYear,
+  TokenTypes
+} from '../../../token';
 
 import { ITokenDetector } from '../../locale';
 import { directionToToken } from './directionDetector';

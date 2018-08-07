@@ -13,7 +13,7 @@ export class Sequence {
     }
   }
 
-  public raw(all = true): Array<{ type: TokenTypes; token: Token<any> }> {
+  public raw(all = true): Array<{ type: TokenTypes; token: string | number }> {
     return this.tokens
       .map(token => ({ type: token.type, token: token.token }))
       .filter(token => all || token.type !== TokenTypes.UNDEFINED);
