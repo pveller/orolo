@@ -1,6 +1,6 @@
 {
   "name": "orolo",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An aggressive natural language dates parser for JavaScript",
   "homepage": "https://github.com/pveller/orolo",
   "bugs": "https://github.com/pveller/orolo/issues",
