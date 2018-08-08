@@ -10,7 +10,7 @@ There are very good NLP date parses for JavaScript:
 * [date](https://github.com/MatthewMueller/date)
 * [recognizers-date-time](https://github.com/Microsoft/Recognizers-Text/tree/master/JavaScript/packages/recognizers-date-time)
 
-There are also strong general purpose NLP frameworks that some with pre-build named entity recognition for dates:
+There are also strong general purpose NLP frameworks and some come with pre-build named entity recognition for dates:
 
 * [compromise](https://github.com/spencermountain/compromise)
 * [natural](https://github.com/NaturalNode/natural)
