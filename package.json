@@ -6,6 +6,9 @@
   "bugs": "https://github.com/pveller/orolo/issues",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "scripts": {
     "prepublish": "npm run build",
     "precommit": "npm run lint",

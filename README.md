@@ -29,7 +29,7 @@ and that's how _orolo_ was born.
 npm install --save orolo
 ```
 
-_Orolo_ is written in Typescript and is compiled down to ES5 for distribution. I realized though that it's currently using `Array.includes()`, `Array.find()`, `Object.assign()` and thus requires ES6/7 runtime (node 6.14+) or a polyfill.
+_Orolo_ is written in Typescript and is compiled down to ES5 for distribution. I realized though that it's currently using `Array.includes()`, `Array.find()`, `Object.assign()` and thus requires ES6/7 runtime (node 6+) or a polyfill.
 
 ## Usage
 
