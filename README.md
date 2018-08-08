@@ -62,7 +62,7 @@ Then it computes the date tokens by arranging them into a computable sequence. T
 
 ## Locales
 
-Right now orolo only supports English but it is designed to support other languages as well. You would need to implement the [`ILocale`](/blob/master/src/locale/locale.ts) interface. The best way to do it at the moment is to take a look at how [`EnglishLocale`](/blob/master/src/locale/english/index.ts) is implemented. In short, you specify how to tokenize a sentence, you also specify how many language tokens (words) can a date token span, and then you implement token detectors for each token type that _orolo_ supports.
+Right now orolo only supports English but it is designed to support other languages as well. You would need to implement the [`ILocale`](/src/locale/locale.ts) interface. The best way to do it at the moment is to take a look at how [`EnglishLocale`](/src/locale/english/index.ts) is implemented. In short, you specify how to tokenize a sentence, you also specify how many language tokens (words) can a date token span, and then you implement token detectors for each token type that _orolo_ supports.
 
 ## Aggressive Parsing
 
