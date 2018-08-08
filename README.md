@@ -21,7 +21,7 @@ Unfortunately, I couldn't find one that would properly understand these sentence
 * Will be in London from june third till june sixth
 * I was in SFO this past Tue and Wed
 
-and that's how _orolo_ was born.
+and that's how _orolo_ was born. Take a look at the [benchmark](https://github.com/pveller/orolo-benchmark) if you wonder how it compares to a few other libraries.
 
 ## Install
 
