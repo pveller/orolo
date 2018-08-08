@@ -29,6 +29,8 @@ and that's how _orolo_ was born.
 npm install --save orolo
 ```
 
+_Orolo_ is written in Typescript and is compiled down to ES5 for distribution. I realized though that it's currently using `Array.includes()`, `Array.find()`, `Object.assign()`, and `Object.entries()` and thus requires ES6/7/8 runtime (node 8+) or a polyfill.
+
 ## Usage
 
 ```javascript
@@ -52,7 +54,11 @@ const dates = orolo.recognize(
 
 ## How It Works
 
-Orolo works in two stages. First, it parses the sentence looking for date tokens. Then it computes the tokens by arranging them into a computable sequence.
+Orolo works in two stages. First, it parses the sentence looking for date tokens. The process of _looking_ traverses the list of word tokens with a simple back-off algorithm and defers to locale specific token detectors to recognize date tokens:
+
+![parsing process animated](/animation/parsing.gif)
+
+Then it computes the date tokens by arranging them into a computable sequence.
 
 ## Locales
 
