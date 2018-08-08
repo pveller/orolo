@@ -58,11 +58,11 @@ Orolo works in two stages. First, it parses the sentence looking for date tokens
 
 ![parsing process animated](/animation/parsing.gif)
 
-Then it computes the date tokens by arranging them into a computable sequence.
+Then it computes the date tokens by arranging them into a computable sequence. The `DAY_OF_MONTH` token, for example, can't be computed without being attached to either a `MONTH` token or a `DIRECTION_MONTH` token. The `RANGE` token will make _orolo_ return all dates that are between the two boundaries - left and right hand side. In the example above, the left hand side of the range is _complete_ and can be computed. The right hand side of the range, however, is missing a month or a relative month direction (i.e. next month, last month) and so _orolo_ will "borrow" the `DIRECTION_MONTH` from the left hand side. The same logic applies, for example, when computing `I was in New York on May 6th, 7th, and 8th` to compute `7th` and `8th` as `May 7th` and `May 8th` respectively.
 
 ## Locales
 
-Right now orolo only supports English but it is designed to support other languages as well. You will need to implement the `ILocale` interface. The best way to do it at the moment is to take a look at how `EnglishLocale` is implemented. In short, you specify how to tokenize a sentence, you also specify how many language tokens (words) can a date token span, and then you implement token detectors for each token type that _orolo_ supports.
+Right now orolo only supports English but it is designed to support other languages as well. You would need to implement the [`ILocale`](/blob/master/src/locale/locale.ts) interface. The best way to do it at the moment is to take a look at how [`EnglishLocale`](/blob/master/src/locale/english/index.ts) is implemented. In short, you specify how to tokenize a sentence, you also specify how many language tokens (words) can a date token span, and then you implement token detectors for each token type that _orolo_ supports.
 
 ## Aggressive Parsing
 
