@@ -2,6 +2,9 @@
 
 Yet another natural language dates parser for JavaScript with a focus on understanding dates and date ranges in a sentence. Orolo is an aggressive parser designed to work on sentenses that are known to contain dates.
 
+[![Build Status](https://travis-ci.org/pveller/orolo.svg?branch=master)](https://travis-ci.org/pveller/orolo)
+[![Coverage Status](https://coveralls.io/repos/github/pveller/orolo/badge.svg?branch=master)](https://coveralls.io/github/pveller/orolo?branch=master)
+
 ## Why
 
 There are very good NLP date parses for JavaScript:
