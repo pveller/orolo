@@ -1,4 +1,4 @@
-import { addMonths, parse, setDate, startOfDay } from 'date-fns';
+import { addMonths, getYear, parse, setDate, startOfDay } from 'date-fns';
 import {
   TokenDayOfMonth,
   TokenDirectionMonth,
@@ -7,6 +7,8 @@ import {
 } from '../';
 
 test('MONTH + DAY (+ YEAR) will compute a date', () => {
+  const now = getYear(new Date());
+
   const year = new TokenDirectionYear(-1); // last year
   const month = new TokenMonth(12);
   const day = new TokenDayOfMonth(15);
@@ -14,8 +16,8 @@ test('MONTH + DAY (+ YEAR) will compute a date', () => {
   month.attach(day);
   year.attach(month);
 
-  expect(month.compute()).toMatchObject([startOfDay(parse('2018-12-15'))]);
-  expect(year.compute()).toMatchObject([startOfDay(parse('2017-12-15'))]);
+  expect(month.compute()).toMatchObject([startOfDay(parse(`${now}-12-15`))]);
+  expect(year.compute()).toMatchObject([startOfDay(parse(`${now - 1}-12-15`))]);
 });
 
 test('MONTH DIRECTION + DAY will compute a date', () => {
